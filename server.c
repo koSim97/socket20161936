@@ -36,8 +36,8 @@ int main(void){
 	while(1){
 		len = sizeof(c_addr);
 		c_socket = accept(s_socket, (struct sockaddr *) &c_addr, &len);
-		printf("Client is connected. ====\n");
-		strcpy(buffer, " Server is connected. ====\n");
+		printf("Client is connected.\n");
+		strcpy(buffer, " Server is connected.\n");
 		write(c_socket, buffer, strlen(buffer));
 
 		while(1){
