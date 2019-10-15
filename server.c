@@ -16,6 +16,9 @@ int main(void){
 	char rcvbuf[100];
 	char cmpbuf1[100];
 	char cmpbuf2[100];
+	char filebuf[100];
+	char buff[255];
+	FILE *fp;
 
 	s_socket = socket(PF_INET, SOCK_STREAM, 0);
 
@@ -51,7 +54,7 @@ int main(void){
 				buffer[strlen(buffer)] = '\0';
 				write(c_socket, buffer, strlen(buffer));
 			}
-			else if(strcmp(rcvbuf, "이름이 뭐야?")==0)
+			else if(strcmp(rcvbuf, "이름이 뭐야?")==0){
 				strcpy(buffer, "내이름은 심지훈이야.");
 				buffer[strlen(buffer)] = '\0';
 				write(c_socket, buffer, strlen(buffer));
@@ -62,8 +65,25 @@ int main(void){
 				write(c_socket, buffer, strlen(buffer));
 			}
 			else if(strncasecmp(rcvbuf, "strlen", 6)==0){
-				sprintf(buffer, "문자열 길이=%d", strlen(rcvbuf)-7);
+				printf(buffer, "문자열 길이=%d", strlen(rcvbuf)-7);
 				write(c_socket, buffer, strlen(buffer));
+			}
+			else if(strncasecmp(rcvbuf,"readfile",8)==0){
+				strtok(rcvbuf," ");
+				strcpy(filebuf, strtok(NULL," "));
+			fp= fopen(filebuf,"r");
+			if(fp){
+				while(fgets(buff, 255, (FILE *)fp)){
+					printf("%s",buff);
+				}
+			}
+			else if(strncasecmp(rcvbuf,"exec",4)==0){
+				strtok(rcvbuf," ");
+				strcpy(filebuf, strtok(NULL," "));
+				system(filebuf)
+				
+			}
+				
 			}
 			else if(strncasecmp(rcvbuf, "strcmp", 6)==0){
 				strtok(rcvbuf, " ");
