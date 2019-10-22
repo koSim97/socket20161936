@@ -54,35 +54,41 @@ int main(void){
 				buffer[strlen(buffer)] = '\0';
 				write(c_socket, buffer, strlen(buffer));
 			}
+
 			else if(strcmp(rcvbuf, "이름이 뭐야?")==0){
 				strcpy(buffer, "내이름은 심지훈이야.");
 				buffer[strlen(buffer)] = '\0';
 				write(c_socket, buffer, strlen(buffer));
 			}
+
 			else if(strcmp(rcvbuf, "몇살이야?")==0){
 				strcpy(buffer, "나는 23살이야.");
 				buffer[strlen(buffer)] = '\0';
 				write(c_socket, buffer, strlen(buffer));
 			}
+
 			else if(strncasecmp(rcvbuf, "strlen", 6)==0){
 				printf(buffer, "문자열 길이=%d", strlen(rcvbuf)-7);
 				write(c_socket, buffer, strlen(buffer));
 			}
+
 			else if(strncasecmp(rcvbuf,"readfile",8)==0){
 				strtok(rcvbuf," ");
 				strcpy(filebuf, strtok(NULL," "));
 			fp= fopen(filebuf,"r");
-			if(fp){
-				while(fgets(buff, 255, (FILE *)fp)){
-					printf("%s",buff);
+				if(fp){
+					while(fgets(buff, 255, (FILE *)fp)){
+						printf("%s",buff);
+					}
+					fclose(fp);
 				}
+				else
+					printf("cannot open");		
 			}
-			else if(strncasecmp(rcvbuf,"exec",4)==0){
-				strtok(rcvbuf," ");
-				strcpy(filebuf, strtok(NULL," "));
-				system(filebuf)
-				
-			}
+				else if(strncasecmp(rcvbuf,"exec",4)==0){
+					strtok(rcvbuf," ");
+					strcpy(filebuf, strtok(NULL," "));
+					system(filebuf);
 				
 			}
 			else if(strncasecmp(rcvbuf, "strcmp", 6)==0){
@@ -92,11 +98,13 @@ int main(void){
 				if(strcmp(cmpbuf1, cmpbuf2)==0){
 					strcpy(buffer, "문자열 일치(값 == 0)");
 				}
+
 				else{
 					sprintf(buffer, "문자열 불일치(값 == %d)", strcmp(cmpbuf1, cmpbuf2));
 				}
 				write(c_socket, buffer, strlen(buffer));
 			}
+
 			else if(strncmp(rcvbuf, "quit", 4)==0 || strncmp(rcvbuf, "kill server", 11)==0)
 				break;
 			else{
