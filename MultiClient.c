@@ -11,7 +11,6 @@
 #define IPADDR "127.0.0.1"
 #define PORT 9000
 #define WHISPER "msg"
-#define TO " "
 void *do_send_chat(void *);
 void *do_receive_chat(void *);
 pthread_t thread_1, thread_2;
@@ -67,7 +66,7 @@ void * do_send_chat(void *arg)
                 if(toname!=NULL)
                     msg=strtok(NULL,"\0");
                 if(token==NULL|| toname==NULL|| msg==NULL){
-                    printf("msg nickname msg");
+                    printf("msg nickname <msg>");
                     continue;
                     }
                 sprintf(chatData,"%s %s [%s] %s",token,toname,nickname,msg);
