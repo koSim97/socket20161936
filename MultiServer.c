@@ -92,7 +92,7 @@ void *do_chat(void *arg)
                     if(nickname!=NULL){
                             a=strcasecmp(nick[i].nickname,nickname);//strcasecmp 값비교..
                             printf("nickname %s %s %d\n",nick[i].nickname,nickname,a);
-                        if(strcasecmp(nick[i].nickname,nickname)==127)
+                        if(strcasecmp(nick[i].nickname,nickname)==0
                             write(list_c[i],msg,strlen(msg));
                     }else{
                 write(list_c[i],chatData,sizeof(chatData));
